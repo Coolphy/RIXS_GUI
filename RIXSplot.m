@@ -16,9 +16,8 @@ function [xdata,ydata] = RIXSplot(filelist)
             end
         end
         avedata=sumdata/filenumber;
-        ydata=avedata
+        ydata=avedata;
         xdata = zeroenergy(pixeldata,avedata);
-        transpose(xdata)
     end
 
 end
@@ -35,9 +34,9 @@ function energydata = zeroenergy(pixeldata,tempdata)
     zeropixel = locs(size(locs,1));
     try
         zerofit = fitelastic(tempdata,pks,locs,w,p);
-        energydata = (pixeldata - zerofit) *energydispersion;
+        energydata = (pixeldata - zerofit) .* energydispersion;
     catch
-        energydata = (pixeldata - zeropixel) *energydispersion;
+        energydata = (pixeldata - zeropixel) .* energydispersion;
     end
 end
 
