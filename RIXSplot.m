@@ -16,8 +16,9 @@ function [xdata,ydata] = RIXSplot(filelist)
             end
         end
         avedata=sumdata/filenumber;
-        ydata=avedata;
+        ydata=avedata
         xdata = zeroenergy(pixeldata,avedata);
+        transpose(xdata)
     end
 
 end
