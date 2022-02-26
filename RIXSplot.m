@@ -7,7 +7,7 @@ function [xdata,ydata] = RIXSplot(filelist)
             filename=[filepath,'\',filelist{i}];
             if i == 1
                 refdata=h5read(filename,'/entry/analysis/spectrum');
-                pixeldata=[1:size(refdata)];
+                pixeldata=transpose([1:size(refdata)]);
                 sumdata=refdata;
             else
                 uncorrdata=h5read(filename,'/entry/analysis/spectrum');
@@ -33,13 +33,19 @@ function energydata = zeroenergy(pixeldata,tempdata)
     [pks,locs,w,p] = findpeaks(tempdata,'MinPeakHeight',5,'MinPeakProminence',3,'MinPeakWidth',4);
     zeropixel = locs(size(locs,1));
     try
-        zerofit = fitelastic(tempdata,pks,locs,w,p);
+        zerofit = fitelastic(pixeldata,tempdata,zeropixel);
         energydata = (pixeldata - zerofit) .* energydispersion;
     catch
         energydata = (pixeldata - zeropixel) .* energydispersion;
     end
 end
 
-function zerofit = fitelastic(tempdata,pks,locs,w,p)
-    
+function zerofit = fitelastic(pixeldata,tempdata,zeropixel)
+    global energydispersion;
+
+    func = fittype('a+b*x+amp*exp(-4*log(2)*(x-xc)^2/(fwhm)^2)','independent','x','coefficients', {'a','b','amp' , 'xc', 'fwhm'});
+    op = fitoptions('Method','NonlinearLeastSquares','Lower',[0, -Inf, 0 , zeropixel-10, energydispersion*8],'Upper',[5, 0, Inf, zeropixel+10, energydispersion*16],'startpoint', [0, -1, 10,zeropixel, energydispersion*10]);
+    fitobject = fit( pixeldata(zeropixel-50:zeropixel+50,1),tempdata(zeropixel-50:zeropixel+50,1), func, op )
+    results=coeffvalues(fitobject);
+    zerofit = results(4);
 end
