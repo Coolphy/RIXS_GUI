@@ -4,7 +4,7 @@ function [xdata,ydata] = RIXSplot(filelist)
     if iscell(filelist)
         filenumber=size(filelist,2);
         for i=1:filenumber
-            filename=[filepath,'\',filelist{i}];
+            filename=[filepath,'/',filelist{i}];
             if i == 1
                 refdata=h5read(filename,'/entry/analysis/spectrum');
                 pixeldata=transpose([1:size(refdata)]);
@@ -44,8 +44,8 @@ function zerofit = fitelastic(pixeldata,tempdata,zeropixel)
     global energydispersion;
 
     func = fittype('a+b*x+amp*exp(-4*log(2)*(x-xc)^2/(fwhm)^2)','independent','x','coefficients', {'a','b','amp' , 'xc', 'fwhm'});
-    op = fitoptions('Method','NonlinearLeastSquares','Lower',[0, -Inf, 0 , zeropixel-10, energydispersion*8],'Upper',[5, 0, Inf, zeropixel+10, energydispersion*16],'startpoint', [0, -1, 10,zeropixel, energydispersion*10]);
-    fitobject = fit( pixeldata(zeropixel-50:zeropixel+50,1),tempdata(zeropixel-50:zeropixel+50,1), func, op )
+    op = fitoptions('Method','NonlinearLeastSquares','Lower',[0, -Inf, 0 , zeropixel-20, energydispersion*8],'Upper',[Inf, 0, Inf, zeropixel+20, energydispersion*16],'startpoint', [0, -1, 10,zeropixel, energydispersion*10]);
+    fitobject = fit( pixeldata(zeropixel-50:zeropixel+50,1),tempdata(zeropixel-50:zeropixel+50,1), func, op );
     results=coeffvalues(fitobject);
     zerofit = results(4);
 end

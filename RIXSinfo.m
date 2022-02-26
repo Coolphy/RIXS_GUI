@@ -3,7 +3,7 @@ function fileinfo = RIXSinfo(filelist)
     fileinfo = 'info';
     
     if iscell(filelist)
-        filename=[filepath,'\',filelist{1}];
+        filename=[filepath,'/',filelist{1}];
         ee=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/PhotonEnergy')));
         p=mean(h5read(filename,'/entry/instrument/NDAttributes/PolarMode'));
         if p == 0
@@ -15,17 +15,17 @@ function fileinfo = RIXSinfo(filelist)
         else
             pp = "C-";
         end
-        tt=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleTemp')));
+        tt=sprintf('%.1f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleTemp')));
         xx=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleXs')));
         yy=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleYs')));
         zz=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleZ')));
         thth=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleTheta')));
         phph=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/SamplePhi')));
         tltl=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleTilt')));
-        atat=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/AcquireTime')));
-        spsp=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/ExposureSplit')));
-        slsl=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/ExitSlit')));
-        bcbc=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/BeamCurrent')));
+        atat=sprintf('%d',mean(h5read(filename,'/entry/instrument/NDAttributes/AcquireTime')));
+        spsp=sprintf('%d',mean(h5read(filename,'/entry/instrument/NDAttributes/ExposureSplit')));
+        slsl=sprintf('%.1f',mean(h5read(filename,'/entry/instrument/NDAttributes/ExitSlit')));
+        bcbc=sprintf('%d',mean(h5read(filename,'/entry/instrument/NDAttributes/BeamCurrent')));
 
         info = strcat("Energy : ",ee);
         info = info+newline+strcat("Polarization : ",pp);
