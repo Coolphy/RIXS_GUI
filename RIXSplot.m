@@ -30,7 +30,7 @@ end
 
 function energydata = zeroenergy(pixeldata,tempdata)
     global energydispersion;
-    [pks,locs,w,p] = findpeaks(tempdata,'MinPeakHeight',5,'MinPeakProminence',3,'MinPeakWidth',4);
+    [pks,locs,w,p] = findpeaks(tempdata,'MinPeakHeight',max(tempdata)/20,'MinPeakProminence',3,'MinPeakWidth',4);
     zeropixel = locs(size(locs,1));
     try
         zerofit = fitelastic(pixeldata,tempdata,zeropixel);

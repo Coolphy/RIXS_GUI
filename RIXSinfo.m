@@ -25,21 +25,21 @@ function fileinfo = RIXSinfo(filelist)
         atat=sprintf('%d',mean(h5read(filename,'/entry/instrument/NDAttributes/AcquireTime')));
         spsp=sprintf('%d',mean(h5read(filename,'/entry/instrument/NDAttributes/ExposureSplit')));
         slsl=sprintf('%.1f',mean(h5read(filename,'/entry/instrument/NDAttributes/ExitSlit')));
-        bcbc=sprintf('%d',mean(h5read(filename,'/entry/instrument/NDAttributes/BeamCurrent')));
+        bcbc=sprintf('%.0f',mean(h5read(filename,'/entry/instrument/NDAttributes/BeamCurrent')));
 
-        info = strcat("Energy : ",ee);
-        info = info+newline+strcat("Polarization : ",pp);
-        info = info+newline+strcat("Temperature : ",tt);
-        info = info+newline+strcat("Sample x : ",xx);
-        info = info+newline+strcat("Sample y : ",yy);
-        info = info+newline+strcat("Sample z : ",zz);
-        info = info+newline+strcat("Sample Theta : ",thth);
-        info = info+newline+strcat("Sample Phi : ",phph);
-        info = info+newline+strcat("Sample Tilt : ",tltl);
-        info = info+newline+strcat("Acquire Time : ",atat);
-        info = info+newline+strcat("Exposure Split : ",spsp);
-        info = info+newline+strcat("Exit Slit : ",slsl);
-        info = info+newline+strcat("Beam Current : ",bcbc);
+        info = strcat("# Energy : ",ee);
+        info = info+newline+strcat("# Polarization : ",pp);
+        info = info+newline+strcat("# Temperature : ",tt);
+        info = info+newline+strcat("# Sample x : ",xx);
+        info = info+newline+strcat("# Sample y : ",yy);
+        info = info+newline+strcat("# Sample z : ",zz);
+        info = info+newline+strcat("# Sample Theta : ",thth);
+        info = info+newline+strcat("# Sample Phi : ",phph);
+        info = info+newline+strcat("# Sample Tilt : ",tltl);
+        info = info+newline+strcat("# Acquire Time : ",atat);
+        info = info+newline+strcat("# Exposure Split : ",spsp);
+        info = info+newline+strcat("# Exit Slit : ",slsl);
+        info = info+newline+strcat("# Beam Current : ",bcbc);
         
         fileinfo = info;
     end
