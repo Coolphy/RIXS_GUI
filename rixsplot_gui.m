@@ -1,4 +1,4 @@
-classdef ADRESS_RIXS_exported < matlab.apps.AppBase
+classdef rixsplot_gui < matlab.apps.AppBase
 
     % Properties that correspond to app components
     properties (Access = public)
@@ -214,7 +214,7 @@ classdef ADRESS_RIXS_exported < matlab.apps.AppBase
     methods (Access = public)
 
         % Construct app
-        function app = ADRESS_RIXS_exported
+        function app = rixsplot_gui
 
             % Create UIFigure and components
             createComponents(app)
