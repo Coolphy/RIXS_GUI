@@ -1,4 +1,4 @@
-classdef rixsplot_gui < matlab.apps.AppBase
+classdef ADRESS_RIXS_exported < matlab.apps.AppBase
 
     % Properties that correspond to app components
     properties (Access = public)
@@ -25,21 +25,18 @@ classdef rixsplot_gui < matlab.apps.AppBase
 
         % Button pushed function: OpenButton
         function OpenButtonPushed(app, event)
-            global filepath fileinfo;
-            filepath = uigetdir('C:\');
-            app.PATHEditField.Value = filepath;
-            fileinfo = dir([filepath,'/*.h5']);
-            app.ListBox.Items = {fileinfo.name};
-%             cd(filepath);
+            app.PATHEditField.Value = uigetdir('C:\');
+            PATHEditFieldValueChanged(app, event);
         end
 
         % Value changed function: PATHEditField
         function PATHEditFieldValueChanged(app, event)
-            global filepath
-            value = app.PATHEditField.Value;
-            filepath = value;
+            global filepath;
+            filepath = app.PATHEditField.Value;
             fileinfo = dir([filepath,'/*.h5']);
             app.ListBox.Items = {fileinfo.name};
+            cd(filepath);
+            cd('..');
         end
 
         % Button pushed function: PlotButton
@@ -49,7 +46,6 @@ classdef rixsplot_gui < matlab.apps.AppBase
             energydispersion = str2double(app.DispersionEditField.Value);
             [xdata,ydata] = RIXSplot(filelist);
             plot(app.UIAxes,xdata,ydata);
-            datacursormode(app.RIXSplotUIFigure, 'on' )
         end
 
         % Button pushed function: ShiftButton
@@ -110,7 +106,6 @@ classdef rixsplot_gui < matlab.apps.AppBase
             app.RIXSplotUIFigure = uifigure('Visible', 'off');
             app.RIXSplotUIFigure.Position = [100 100 839 477];
             app.RIXSplotUIFigure.Name = 'RIXSplot';
-            app.RIXSplotUIFigure.Icon = 'icon.ico';
             app.RIXSplotUIFigure.WindowButtonMotionFcn = createCallbackFcn(app, @RIXSplotUIFigureWindowButtonMotion, true);
 
             % Create OpenButton
@@ -126,7 +121,7 @@ classdef rixsplot_gui < matlab.apps.AppBase
             app.PATHEditFieldLabel.Text = 'PATH';
 
             % Create PATHEditField
-            app.PATHEditField = uieditfield(app.RIXSplotUIFigure, 'text');
+            app.PATHEditField = uieditfield(app.RIXSplotUIFigure, 'ne');
             app.PATHEditField.ValueChangedFcn = createCallbackFcn(app, @PATHEditFieldValueChanged, true);
             app.PATHEditField.Tag = 'pathtext';
             app.PATHEditField.Position = [195 435 428 26];
@@ -214,7 +209,7 @@ classdef rixsplot_gui < matlab.apps.AppBase
     methods (Access = public)
 
         % Construct app
-        function app = rixsplot_gui
+        function app = ADRESS_RIXS_exported
 
             % Create UIFigure and components
             createComponents(app)

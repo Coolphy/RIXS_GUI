@@ -7,13 +7,13 @@ function fileinfo = RIXSinfo(filelist)
         ee=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/PhotonEnergy')));
         p=mean(h5read(filename,'/entry/instrument/NDAttributes/PolarMode'));
         if p == 0
-            pp = "LH";
+            pp = 'LH';
         elseif p == 1
-            pp = "LV";
+            pp = 'LV';
         elseif p == 2
-            pp = "C+";
+            pp = 'C+';
         else
-            pp = "C-";
+            pp = 'C-';
         end
         tt=sprintf('%.1f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleTemp')));
         xx=sprintf('%.3f',mean(h5read(filename,'/entry/instrument/NDAttributes/SampleXs')));
@@ -27,19 +27,19 @@ function fileinfo = RIXSinfo(filelist)
         slsl=sprintf('%.1f',mean(h5read(filename,'/entry/instrument/NDAttributes/ExitSlit')));
         bcbc=sprintf('%.0f',mean(h5read(filename,'/entry/instrument/NDAttributes/BeamCurrent')));
 
-        info = strcat("# Energy : ",ee);
-        info = info+newline+strcat("# Polarization : ",pp);
-        info = info+newline+strcat("# Temperature : ",tt);
-        info = info+newline+strcat("# Sample x : ",xx);
-        info = info+newline+strcat("# Sample y : ",yy);
-        info = info+newline+strcat("# Sample z : ",zz);
-        info = info+newline+strcat("# Sample Theta : ",thth);
-        info = info+newline+strcat("# Sample Phi : ",phph);
-        info = info+newline+strcat("# Sample Tilt : ",tltl);
-        info = info+newline+strcat("# Acquire Time : ",atat);
-        info = info+newline+strcat("# Exposure Split : ",spsp);
-        info = info+newline+strcat("# Exit Slit : ",slsl);
-        info = info+newline+strcat("# Beam Current : ",bcbc);
+        info = strcat('# Energy : ',ee);
+        info = [info newline strcat('# Polarization : ',pp)];
+        info = [info newline strcat('# Temperature : ',tt)];
+        info = [info newline strcat('# Sample x : ',xx)];
+        info = [info newline strcat('# Sample y : ',yy)];
+        info = [info newline strcat('# Sample z : ',zz)];
+        info = [info newline strcat('# Sample Theta : ',thth)];
+        info = [info newline strcat('# Sample Phi : ',phph)];
+        info = [info newline strcat('# Sample Tilt : ',tltl)];
+        info = [info newline strcat('# Acquire Time : ',atat)];
+        info = [info newline strcat('# Exposure Split : ',spsp)];
+        info = [info newline strcat('# Exit Slit : ',slsl)];
+        info = [info newline strcat('# Beam Current : ',bcbc)];
         
         fileinfo = info;
     end
