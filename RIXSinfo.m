@@ -27,19 +27,19 @@ function fileinfo = RIXSinfo(filelist)
         slsl=sprintf('%.1f',mean(h5read(filename,'/entry/instrument/NDAttributes/ExitSlit')));
         bcbc=sprintf('%.0f',mean(h5read(filename,'/entry/instrument/NDAttributes/BeamCurrent')));
 
-        info = strcat('# Energy : ',ee);
+        info = strcat('# Energy : ',ee,' eV');
         info = [info newline strcat('# Polarization : ',pp)];
-        info = [info newline strcat('# Temperature : ',tt)];
-        info = [info newline strcat('# Sample x : ',xx)];
-        info = [info newline strcat('# Sample y : ',yy)];
-        info = [info newline strcat('# Sample z : ',zz)];
-        info = [info newline strcat('# Sample Theta : ',thth)];
-        info = [info newline strcat('# Sample Phi : ',phph)];
-        info = [info newline strcat('# Sample Tilt : ',tltl)];
-        info = [info newline strcat('# Acquire Time : ',atat)];
-        info = [info newline strcat('# Exposure Split : ',spsp)];
-        info = [info newline strcat('# Exit Slit : ',slsl)];
-        info = [info newline strcat('# Beam Current : ',bcbc)];
+        info = [info newline strcat('# Temperature : ',tt,' K')];
+        info = [info newline strcat('# Sample x : ',xx,' mm')];
+        info = [info newline strcat('# Sample y : ',yy,' mm')];
+        info = [info newline strcat('# Sample z : ',zz,' mm')];
+        info = [info newline strcat('# Sample Theta : ',thth,' deg.')];
+        info = [info newline strcat('# Sample Phi : ',phph,' deg.')];
+        info = [info newline strcat('# Sample Tilt : ',tltl,' deg.')];
+        info = [info newline strcat('# Acquire Time : ',atat,' s')];
+        info = [info newline strcat('# Exposure Split : ',spsp,' s')];
+        info = [info newline strcat('# Exit Slit : ',slsl,' um')];
+        info = [info newline strcat('# Beam Current : ',bcbc,' mA')];
         
         fileinfo = info;
     end
