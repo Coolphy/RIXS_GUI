@@ -7,15 +7,18 @@ function [xdata,ydata] = RIXSplot(filelist)
             filename=[filepath,'/',filelist{i}];
             if i == 1
                 refdata=h5read(filename,'/entry/analysis/spectrum');
+                totTime = mean(h5read(filename,'/entry/instrument/NDAttributes/AcquireTime'));
                 pixeldata=transpose([1:size(refdata)]);
                 sumdata=refdata;
             else
                 uncorrdata=h5read(filename,'/entry/analysis/spectrum');
+                oneTime = mean(h5read(filename,'/entry/instrument/NDAttributes/AcquireTime'));
                 corrdata=correlatedata(refdata,uncorrdata);
                 sumdata=sumdata+corrdata;
+                totTime=totTime+oneTime;
             end
         end
-        avedata=sumdata/filenumber;
+        avedata=sumdata/totTime*300;
         ydata=avedata;
         xdata = zeroenergy(pixeldata,avedata);
     end
@@ -44,7 +47,7 @@ function zerofit = fitelastic(pixeldata,tempdata,zeropixel)
     global energydispersion;
 
     func = fittype('a+b*x+amp*exp(-4*log(2)*(x-xc)^2/(fwhm)^2)','independent','x','coefficients', {'a','b','amp' , 'xc', 'fwhm'});
-    op = fitoptions('Method','NonlinearLeastSquares','Lower',[0, -Inf, 0 , zeropixel-20, energydispersion*8],'Upper',[Inf, 0, Inf, zeropixel+20, energydispersion*16],'startpoint', [0, -1, 10,zeropixel, energydispersion*10]);
+    op = fitoptions('Method','NonlinearLeastSquares','Lower',[0, -Inf, 0 , zeropixel-20, 8],'Upper',[Inf, 0, Inf, zeropixel+20, 16],'startpoint', [0, -1, 10,zeropixel, 10]);
     fitobject = fit( pixeldata(zeropixel-50:zeropixel+50,1),tempdata(zeropixel-50:zeropixel+50,1), func, op );
     results=coeffvalues(fitobject);
     zerofit = results(4);

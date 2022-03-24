@@ -27,7 +27,8 @@ function fileinfo = RIXSinfo(filelist)
         slsl=sprintf('%.1f',mean(h5read(filename,'/entry/instrument/NDAttributes/ExitSlit')));
         bcbc=sprintf('%.0f',mean(h5read(filename,'/entry/instrument/NDAttributes/BeamCurrent')));
 
-        info = strcat('# Energy : ',ee,' eV');
+        info = strcat('# ',filename);
+        info = [info newline strcat('# Energy : ',ee,' eV')];
         info = [info newline strcat('# Polarization : ',pp)];
         info = [info newline strcat('# Temperature : ',tt,' K')];
         info = [info newline strcat('# Sample x : ',xx,' mm')];

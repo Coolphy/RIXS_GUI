@@ -26,17 +26,12 @@ classdef ADRESS_RIXS_exported < matlab.apps.AppBase
         % Button pushed function: OpenButton
         function OpenButtonPushed(app, event)
             app.PATHEditField.Value = uigetdir('C:\');
-            PATHEditFieldValueChanged(app, event);
-        end
-
-        % Value changed function: PATHEditField
-        function PATHEditFieldValueChanged(app, event)
             global filepath;
             filepath = app.PATHEditField.Value;
             fileinfo = dir([filepath,'/*.h5']);
             app.ListBox.Items = {fileinfo.name};
-            cd(filepath);
-            cd('..');
+%             cd(filepath);
+%             cd('..');
         end
 
         % Button pushed function: PlotButton
@@ -58,13 +53,17 @@ classdef ADRESS_RIXS_exported < matlab.apps.AppBase
 
         % Value changed function: ListBox
         function ListBoxValueChanged(app, event)
+            global filepath;
+            fileinfo = dir([filepath,'/*.h5']);
+            app.ListBox.Items = {fileinfo.name};
+
             infovalue = app.ListBox.Value;
             app.INFOTextArea.Value = RIXSinfo(infovalue);
+
             value = app.CompareCheckBox.Value;
             if value == 0
                 PlotButtonPushed(app, event);
             end
-            
         end
 
         % Button pushed function: SaveButton
@@ -94,6 +93,15 @@ classdef ADRESS_RIXS_exported < matlab.apps.AppBase
             currPt = app.UIAxes.CurrentPoint;
             app.PositionEditField.Value = sprintf('( %.3f , %.3f )',currPt(1,1),currPt(1,2));
         end
+
+        % Value changing function: PATHEditField
+        function PATHEditFieldValueChanging(app, event)
+            changingValue = event.Value;
+            global filepath;
+            filepath = changingValue;
+            fileinfo = dir([filepath,'/*.h5']);
+            app.ListBox.Items = {fileinfo.name};
+        end
     end
 
     % Component initialization
@@ -121,8 +129,8 @@ classdef ADRESS_RIXS_exported < matlab.apps.AppBase
             app.PATHEditFieldLabel.Text = 'PATH';
 
             % Create PATHEditField
-            app.PATHEditField = uieditfield(app.RIXSplotUIFigure, 'ne');
-            app.PATHEditField.ValueChangedFcn = createCallbackFcn(app, @PATHEditFieldValueChanged, true);
+            app.PATHEditField = uieditfield(app.RIXSplotUIFigure, 'text');
+            app.PATHEditField.ValueChangingFcn = createCallbackFcn(app, @PATHEditFieldValueChanging, true);
             app.PATHEditField.Tag = 'pathtext';
             app.PATHEditField.Position = [195 435 428 26];
             app.PATHEditField.Value = 'X:\';
